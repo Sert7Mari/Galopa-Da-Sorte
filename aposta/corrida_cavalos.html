@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corrida de Cavalos Rosa - Apostas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes corrida {
+            0% { left: 0; }
+            100% { left: calc(100% - 60px); }
+        }
+        
+        @keyframes confete {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+        
+        .cavalo {
+            animation: corrida 5s linear forwards;
+            animation-play-state: paused;
+        }
+        
+        .podium-1 {
+            background: linear-gradient(145deg, #ec4899, #f472b6);
+            box-shadow: 0 0 30px #ec4899;
+            transform: scale(1.2);
+        }
+        
+        .podium-2 {
+            background: linear-gradient(145deg, #f9a8d4, #fbcfe8);
+            box-shadow: 0 0 20px #f9a8d4;
+        }
+        
+        .podium-3 {
+            background: linear-gradient(145deg, #fce7f3, #fdf2f8);
+            box-shadow: 0 0 15px #fce7f3;
+        }
+        
+        .confete {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #ec4899;
+            animation: confete 3s ease-in forwards;
+            z-index: 1000;
+            pointer-events: none;
+            border-radius: 50%;
+        }
+        
+        .cavalo-selecionado {
+            background: linear-gradient(145deg, #ec4899, #db2777) !important;
+            color: white !important;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px #ec4899;
+        
+        }
+        
+    </style>
+</head>
+<body class="bg-gradient-to-br from-pink-900 to-purple-900 min-h-screen text-white">
+  <div class="container mx-auto px-4 py-8">
+    <!-- Cabeçalho -->
+    <div class="text-center mb-8">
+      <!-- Logo centralizada e grande -->
+      <img src="logo.png" alt="Logo Corrida de Cavalos Rosa - Cavalo elegante com detalhes rosas e dourados" class="mx-auto w-64 h-32 object-contain mb-6" />
+      
+      <!-- Saldo grande e destacado -->
+      <div class="bg-white bg-opacity-20 rounded-lg p-6 inline-block">
+        <p class="text-4xl font-extrabold text-pink-400">
+          🎀 Saldo: <span id="saldo">100</span> moedas
+        </p>
+      </div>
+    </div>
+
+<!-- Pista de Corrida -->
+<div class="flex justify-center mb-8">
+    <div class="rounded-lg p-6 relative overflow-hidden bg-pink-800 bg-opacity-50" 
+         style="height: 600px; width: 1300px; 
+                background-image: url('Gemini_Generated_Image_p2rh7kp2rh7kp2rh.png'); 
+                background-size: cover; 
+                background-position: center;">
+        
+        <!-- Container dos cavalos -->
+        <div id="pista" class="relative h-full z-10">
+
+</div>
+                <!-- Linha de chegada -->
+                <div class="absolute top-0 right-0 w-2 h-full bg-yellow-400 z-10"></div>
+                
+                <!-- Cavalos -->
+                <div id="pista" class="relative h-full">
+                    <!-- Os cavalos serão inseridos via JavaScript -->
+                </div>
+                
+                <!-- Faixas da pista -->
+                <div class="absolute top-1/8 w-full h-px bg-white opacity-30"></div>
+                <div class="absolute top-2/8 w-full h-px bg-white opacity-30"></div>
+                <div class="absolute top-3/8 w-full h-px bg-white opacity-30"></div>
+                <div class="absolute top-4/8 w-full h-px bg-white opacity-30"></div>
+                <div class="absolute top-5/8 w-full h-px bg-white opacity-30"></div>
+                <div class="absolute top-6/8 w-full h-px bg-white opacity-30"></div>
+                <div class="absolute top-7/8 w-full h-px bg-white opacity-30"></div>
+            </div>
+        </div>
+
+        <!-- Área de Apostas -->
+        <div class="bg-pink-800 bg-opacity-50 rounded-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold text-pink-400 mb-4">🎀 FAÇA SUA APOSTA</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- Escolha do Cavalo -->
+<!-- Escolha do Cavalo -->
+<div>
+    <label class="block text-lg font-semibold mb-2">Escolha seu cavalo:</label>
+    <div class="grid grid-cols-4 gap-4" id="botoes-cavalos">
+        <button class="cavalo-btn bg-pink-600 hover:bg-pink-700 p-3 rounded transition-all flex flex-col items-center" data-cavalo="1">
+            <img src="img/colorida.PNG" alt="Cavalo 1" class="w-12 h-12 mb-2" />
+            <span class="text-white font-semibold">Raindow Dash</span>
+        </button>
+        <button class="cavalo-btn bg-pink-600 hover:bg-pink-700 p-3 rounded transition-all flex flex-col items-center" data-cavalo="2">
+            <img src="img/caipira.PNG" alt="Cavalo 2" class="w-12 h-12 mb-2" />
+            <span class="text-white font-semibold">Applejack</span>
+        </button>
+        <button class="cavalo-btn bg-pink-600 hover:bg-pink-700 p-3 rounded transition-all flex flex-col items-center" data-cavalo="3">
+            <img src="img/a roza.PNG" alt="Cavalo 3" class="w-12 h-12 mb-2" />
+            <span class="text-white font-semibold">Pinkie Pie</span>
+        </button>
+        <button class="cavalo-btn bg-pink-600 hover:bg-pink-700 p-3 rounded transition-all flex flex-col items-center" data-cavalo="4">
+            <img src="img/a roxa.PNG" alt="Cavalo 4" class="w-12 h-12 mb-2" />
+            <span class="text-white font-semibold">Rarity</span>
+        </button>
+        <button class="cavalo-btn bg-pink-600 hover:bg-pink-700 p-3 rounded transition-all flex flex-col items-center" data-cavalo="5">
+            <img src="rosa e amarelo .PNG" alt="Cavalo 5" class="w-12 h-12 mb-2" />
+            <span class="text-white font-semibold">Fluttershy</span>
+        </button>
+        <button class="cavalo-btn bg-pink-600 hover:bg-pink-700 p-3 rounded transition-all flex flex-col items-center" data-cavalo="6">
+            <img src="roxa principal.PNG" alt="Cavalo 6" class="w-12 h-12 mb-2" />
+            <span class="text-white font-semibold">Twilight Sparkle</span>
+        </button>
+        <button class="cavalo-btn bg-pink-600 hover:bg-pink-700 p-3 rounded transition-all flex flex-col items-center" data-cavalo="7">
+            <img src="spikc.png" alt="Cavalo 7" class="w-12 h-12 mb-2" />
+            <span class="text-white font-semibold">Spike</span>
+        </button>
+        <button class="cavalo-btn bg-pink-600 hover:bg-pink-700 p-3 rounded transition-all flex flex-col items-center" data-cavalo="8">
+            <img src="princesa.png" alt="Cavalo 8" class="w-12 h-12 mb-2" />
+            <span class="text-white font-semibold">Pincesa Celestia</span>
+        </button>
+    </div>
+</div>
+
+
+                    <p class="mt-2 text-center">Cavalo escolhido: <span id="cavalo-escolhido" class="font-bold text-pink-400">Nenhum</span></p>
+                </div>
+
+                <!-- Valor da Aposta -->
+                <div>
+                    <label class="block text-lg font-semibold mb-2">Valor da aposta:</label>
+                    <input type="number" id="aposta" min="1" max="100" value="10" 
+                           class="w-full p-3 rounded bg-pink-700 text-white border border-pink-600 focus:border-pink-400 focus:ring-2 focus:ring-pink-400">
+                    <div class="flex gap-2 mt-2">
+                        <button id="btn-mais5" class="flex-1 bg-pink-600 hover:bg-pink-700 p-2 rounded">+5</button>
+                        <button id="btn-mais10" class="flex-1 bg-pink-600 hover:bg-pink-700 p-2 rounded">+10</button>
+                        <button id="btn-mais25" class="flex-1 bg-pink-600 hover:bg-pink-700 p-2 rounded">+25</button>
+                        <button id="btn-tudo" class="flex-1 bg-pink-500 hover:bg-pink-600 p-2 rounded">TUDO</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botão Iniciar Corrida -->
+            <div class="text-center mt-6">
+                <button id="btn-corrida" 
+                        class="bg-pink-600 hover:bg-pink-700 text-white font-bold py-4 px-8 rounded-full text-xl transition-all transform hover:scale-105">
+                    INICIAR CORRIDA 🌈
+                </button>
+            </div>
+        </div>
+
+        <!-- Resultados -->
+        <div id="resultados" class="hidden bg-pink-800 bg-opacity-50 rounded-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold text-pink-400 mb-4">🎀 RESULTADOS 🎀</h2>
+            
+            <!-- Pódio -->
+            <div class="grid grid-cols-3 gap-4 mb-6" id="podio">
+                <!-- Pódio será preenchido via JavaScript -->
+            </div>
+
+            <!-- Mensagem do Resultado -->
+            <div id="mensagem-resultado" class="text-center p-4 rounded-lg bg-white bg-opacity-10">
+                <!-- Mensagem será preenchida via JavaScript -->
+            </div>
+
+            <div class="text-center mt-6">
+                <button id="btn-reiniciar" 
+                        class="bg-pink-600 hover:bg-pink-700 text-white font-bold py-3 px-6 rounded-lg">
+                    🔄 Jogar Novamente
+                </button>
+            </div>
+        </div>
+
+        <!-- Área do Vencedor -->
+        <div id="vencedor-container" class="hidden fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50">
+            <div class="text-center bg-gradient-to-br from-pink-400 to-purple-500 p-8 rounded-lg shadow-2xl">
+                <h1 class="text-6xl font-bold text-white mb-4">🌈 VENCEDOR! 🌈</h1>
+                <p class="text-2xl mb-4">Seu cavalo chegou em 1º lugar!</p>
+                <div id="foto-vencedor" class="mx-auto mb-4 w-32 h-32 bg-pink-300 rounded-full flex items-center justify-center text-4xl">
+                    🏆
+                </div>
+                <p class="text-xl mb-4">Você ganhou <span id="ganho" class="font-bold">0</span> moedas!</p>
+                <button id="btn-fechar-vencedor" 
+                        class="bg-pink-600 hover:bg-pink-700 text-white font-bold py-3 px-6 rounded-lg">
+                    Continuar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variáveis do jogo
+        let saldo = 100;
+        let cavaloEscolhido = null;
+        let aposta = 10;
+        const numeroCavalos = 8;
+        let corridaEmAndamento = false;
+
+        // Elementos DOM
+        const saldoEl = document.getElementById('saldo');
+        const cavaloEscolhidoEl = document.getElementById('cavalo-escolhido');
+        const apostaEl = document.getElementById('aposta');
+        const btnCorrida = document.getElementById('btn-corrida');
+        const resultadosEl = document.getElementById('resultados');
+        const mensagemResultadoEl = document.getElementById('mensagem-resultado');
+        const podioEl = document.getElementById('podio');
+        const pistaEl = document.getElementById('pista');
+        const vencedorContainerEl = document.getElementById('vencedor-container');
+        const ganhoEl = document.getElementById('ganho');
+        const fotoVencedorEl = document.getElementById('foto-vencedor');
+        const btnMais5 = document.getElementById('btn-mais5');
+        const btnMais10 = document.getElementById('btn-mais10');
+        const btnMais25 = document.getElementById('btn-mais25');
+        const btnTudo = document.getElementById('btn-tudo');
+        const btnReiniciar = document.getElementById('btn-reiniciar');
+        const btnFecharVencedor = document.getElementById('btn-fechar-vencedor');
+        const cavaloBtns = document.querySelectorAll('.cavalo-btn');
+
+        // Inicializar a pista com os cavalos empilhados
+        function inicializarPista() {
+            pistaEl.innerHTML = '';
+            for (let i = 1; i <= numeroCavalos; i++) {
+                const cavalo = document.createElement('div');
+                cavalo.className = 'cavalo absolute w-12 h-12 bg-pink-400 rounded-full border-4 border-pink-600 shadow-lg flex items-center justify-center';
+                cavalo.style.top = `${(i * 60) - 30}px`; // 60px entre cavalos
+                cavalo.style.left = '0';
+                cavalo.id = `cavalo-${i}`;
+                cavalo.innerHTML = `
+                    <span class="text-white font-bold">${i}</span>
+                `;
+                pistaEl.appendChild(cavalo);
+            }
+        }
+
+        // Selecionar cavalo
+        function selecionarCavalo(numero) {
+            if (corridaEmAndamento) return;
+            
+            cavaloEscolhido = numero;
+            cavaloEscolhidoEl.textContent = numero;
+            
+            // Destacar o cavalo selecionado
+            cavaloBtns.forEach(btn => {
+                btn.classList.remove('cavalo-selecionado');
+            });
+            
+            const cavaloBtn = document.querySelector(`.cavalo-btn[data-cavalo="${numero}"]`);
+            if (cavaloBtn) {
+                cavaloBtn.classList.add('cavalo-selecionado');
+            }
+        }
+
+        // Alterar valor da aposta
+        function alterarAposta(valor) {
+            if (corridaEmAndamento) return;
+            
+            if (valor === 'max') {
+                aposta = saldo;
+            } else {
+                aposta = Math.min(saldo, aposta + valor);
+            }
+            apostaEl.value = aposta;
+        }
+
+        // Iniciar corrida
+        function iniciarCorrida() {
+            if (corridaEmAndamento) return;
+            if (!cavaloEscolhido) {
+                alert('Escolha um cavalo primeiro!');
+                return;
+            }
+            
+            aposta = parseInt(apostaEl.value);
+            if (aposta < 1 || aposta > saldo) {
+                alert('Valor de aposta inválido!');
+                return;
+            }
+            
+            corridaEmAndamento = true;
+            btnCorrida.disabled = true;
+            btnCorrida.textContent = '🎠 CORRENDO...';
+            
+            // Resetar animações
+            const cavalos = document.querySelectorAll('.cavalo');
+            cavalos.forEach(cavalo => {
+                cavalo.style.animation = 'none';
+                cavalo.style.left = '0';
+                cavalo.offsetHeight; // Trigger reflow
+                cavalo.style.animation = '';
+            });
+
+            // Função para narrar texto com voz
+function narrar(texto) {
+    if (!('speechSynthesis' in window)) {
+        console.warn('SpeechSynthesis não suportado neste navegador.');
+        return;
+    }
+    const utterance = new SpeechSynthesisUtterance(texto);
+    utterance.lang = 'pt-BR';
+    utterance.rate = 1; // velocidade da fala
+    utterance.pitch = 1; // tom da voz
+    speechSynthesis.speak(utterance);
+}
+
+// Função para narrar a corrida em andamento
+function narrarCorrida(velocidades) {
+    // Exemplo simples: narrar o cavalo que está na frente a cada 2 segundos
+    let intervalId = setInterval(() => {
+        if (!corridaEmAndamento) {
+            clearInterval(intervalId);
+            return;
+        }
+        // Encontrar cavalo na frente (menor tempo = mais rápido)
+        const indicesOrdenados = [...velocidades].map((v, i) => i)
+            .sort((a, b) => velocidades[a] - velocidades[b]);
+        const lider = indicesOrdenados[0] + 1;
+        const segundo = indicesOrdenados[1] + 1;
+
+        // Frases aleatórias para variar
+        const frases = [
+            `O cavalo número ${lider} está na frente!`,
+            `Que disputa acirrada entre o cavalo ${lider} e o cavalo ${segundo}!`,
+            `O público está vibrando com o cavalo ${lider}!`,
+            `O cavalo ${lider} acelera e mantém a liderança!`
+        ];
+        const frase = frases[Math.floor(Math.random() * frases.length)];
+        narrar(frase);
+    }, 2000);
+}
+
+            
+            // Configurar velocidades aleatórias
+            const velocidades = [];
+            for (let i = 0; i < numeroCavalos; i++) {
+                const velocidade = 3 + Math.random() * 4; // 3-7 segundos
+                velocidades.push(velocidade);
+                cavalos[i].style.animationDuration = `${velocidade}s`;
+                cavalos[i].style.animationPlayState = 'running';
+            }
+            
+            // Determinar vencedor (mais rápido)
+            setTimeout(() => {
+                const indicesOrdenados = [...velocidades].map((v, i) => i)
+                    .sort((a, b) => velocidades[a] - velocidades[b]);
+                
+                const primeiro = indicesOrdenados[0] + 1;
+                const segundo = indicesOrdenados[1] + 1;
+                const terceiro = indicesOrdenados[2] + 1;
+                
+                processarResultado(primeiro, segundo, terceiro);
+            }, 8000);
+        }
+
+        // Processar resultado da corrida
+        function processarResultado(primeiro, segundo, terceiro) {
+            corridaEmAndamento = false;
+            
+            if (cavaloEscolhido === primeiro) {
+                const ganho = aposta * 2;
+                saldo += ganho;
+                mostrarVencedor(ganho);
+            } else {
+                saldo -= aposta;
+            }
+            
+            saldoEl.textContent = saldo;
+            mostrarPodio(primeiro, segundo, terceiro);
+            
+            btnCorrida.disabled = false;
+            btnCorrida.textContent = '🧡 INICIAR CORRIDA 🧡';
+            
+            if (saldo <= 0) {
+                mensagemResultadoEl.innerHTML += `
+                    <p class="text-2xl text-red-400 mt-4"> FIM DE JOGO! 🎠</p>
+                    <p>Você ficou sem moedas.</p>
+                `;
+            }
+        }
+
+        // Mostrar pódio
+        function mostrarPodio(primeiro, segundo, terceiro) {
+            podioEl.innerHTML = `
+                <div class="text-center">
+                    <div class="podium-1 p-4 rounded-lg h-48 flex flex-col items-center justify-end">
+                        <span class="text-4xl">🥇</span>
+                        <p class="text-xl font-bold mt-2">1º Lugar</p>
+                        <p class="text-2xl font-bold">Cavalo ${primeiro}</p>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <div class="podium-2 p-4 rounded-lg h-40 flex flex-col items-center justify-end">
+                        <span class="text-3xl">🥈</span>
+                        <p class="text-lg font-bold mt-2">2º Lugar</p>
+                        <p class="text-xl font-bold">Cavalo ${segundo}</p>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <div class="podium-3 p-4 rounded-lg h-32 flex flex-col items-center justify-end">
+                        <span class="text-2xl">🥉</span>
+                        <p class="font-bold mt-2">3º Lugar</p>
+                        <p class="text-lg font-bold">Cavalo ${terceiro}</p>
+                    </div>
+                </div>
+            `;
+            
+            if (cavaloEscolhido === primeiro) {
+                mensagemResultadoEl.innerHTML = `
+                    <p class="text-3xl text-green-400 mb-2">🌼 PARABÉNS! 🌼</p>
+                    <p class="text-xl">Seu cavalo ${cavaloEscolhido} ganhou a corrida!</p>
+                    <p>Você ganhou ${aposta * 2} moedas!</p>
+                `;
+            } else {
+                mensagemResultadoEl.innerHTML = `
+                    <p class="text-2xl text-red-400 mb-2">😭 QUE PENA!</p>
+                    <p class="text-xl">Seu cavalo ${cavaloEscolhido} não venceu.</p>
+                    <p>O vencedor foi o cavalo ${primeiro}.</p>
+                `;
+            }
+            
+            resultadosEl.classList.remove('hidden');
+        }
+
+        // Mostrar tela de vencedor com confete
+        function mostrarVencedor(ganho) {
+            ganhoEl.textContent = ganho;
+            fotoVencedorEl.innerHTML = `🎠 ${cavaloEscolhido}`;
+            vencedorContainerEl.classList.remove('hidden');
+            criarConfete();
+        }
+
+        // Fechar tela de vencedor
+        function fecharVencedor() {
+            vencedorContainerEl.classList.add('hidden');
+        }
+
+        // Criar efeito de confete
+        function criarConfete() {
+            const colors = ['#ec4899', '#db2777', '#be185d', '#9d174d', '#f472b6', '#f9a8d4'];
+            
+    for (let i = 0; i < 150; i++) {
+        const confete = document.createElement('div');
+        confete.className = 'confete';
+        confete.style.left = Math.random() * 100 + 'vw'; // espalha horizontalmente pela viewport
+        confete.style.top = Math.random() * 100 + 'vh';  // espalha verticalmente pela viewport
+        confete.style.background = colors[Math.floor(Math.random() * colors.length)];
+        const size = Math.random() * 15 + 8;
+        confete.style.width = size + 'px';
+        confete.style.height = size + 'px';
+        confete.style.animationDelay = Math.random() * 3 + 's';
+        confete.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+        confete.style.position = 'fixed';
+        confete.style.zIndex = 10000;
+        confete.style.pointerEvents = 'none';
+        document.body.appendChild(confete);
+                
+                document.body.appendChild(confete);
+                
+                setTimeout(() => {
+                    confete.remove();
+                }, 4000);
+            }
+        }
+
+        // Reiniciar jogo
+        function reiniciarJogo() {
+            resultadosEl.classList.add('hidden');
+            vencedorContainerEl.classList.add('hidden');
+            
+            const cavalos = document.querySelectorAll('.cavalo');
+            cavalos.forEach(cavalo => {
+                cavalo.style.left = '0';
+            });
+            
+            cavaloBtns.forEach(btn => {
+                btn.classList.remove('cavalo-selecionado');
+            });
+            
+            cavaloEscolhido = null;
+            cavaloEscolhidoEl.textContent = 'Nenhum';
+            aposta = Math.min(10, saldo);
+            apostaEl.value = aposta;
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            inicializarPista();
+            
+            // Botões dos cavalos
+            cavaloBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const numero = parseInt(btn.getAttribute('data-cavalo'));
+                    selecionarCavalo(numero);
+                });
+            });
+            
+            // Botões de aposta
+            btnMais5.addEventListener('click', () => alterarAposta(5));
+            btnMais10.addEventListener('click', () => alterarAposta(10));
+            btnMais25.addEventListener('click', () => alterarAposta(25));
+            btnTudo.addEventListener('click', () => alterarAposta('max'));
+            
+            // Botão iniciar corrida
+            btnCorrida.addEventListener('click', iniciarCorrida);
+            
+            // Botão reiniciar
+            btnReiniciar.addEventListener('click', reiniciarJogo);
+            
+            // Botão fechar vencedor
+            btnFecharVencedor.addEventListener('click', fecharVencedor);
+            
+            // Validar aposta
+            apostaEl.addEventListener('input', function() {
+                aposta = Math.min(Math.max(1, parseInt(this.value) || 1), saldo);
+                this.value = aposta;
+            });
+        });
+
+        // Tecla Enter para iniciar corrida
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !corridaEmAndamento) {
+                iniciarCorrida();
+            }
+        });
+        const imagensCavalos = [
+  'colorida.PNG',
+  'caipira.PNG',
+  'a roza.PNG',
+  'a roxa.PNG',
+  'rosa e amarelo .PNG',
+  'roxa principal.PNG',
+  'spikc.png',
+  'princesa.png'
+];
+
+function inicializarPista() {
+    pistaEl.innerHTML = '';
+    for (let i = 1; i <= numeroCavalos; i++) {
+        const cavalo = document.createElement('div');
+        cavalo.className = 'cavalo absolute w-12 h-12 rounded-full border-4 border-pink-600 shadow-lg flex items-center justify-center bg-pink-400';
+        cavalo.style.top = `${(i * 60) - 30}px`;
+        cavalo.style.left = '0';
+        cavalo.id = `cavalo-${i}`;
+
+        const img = document.createElement('img');
+        img.src = imagensCavalos[i - 1];
+        img.alt = `Cavalo ${i}`;
+        img.className = 'w-full h-full object-cover rounded-full';
+
+        cavalo.appendChild(img);
+        pistaEl.appendChild(cavalo);
+    }
+}
+function mostrarVencedor(ganho) {
+    ganhoEl.textContent = ganho;
+    fotoVencedorEl.innerHTML = '';
+    const img = document.createElement('img');
+    img.src = imagensCavalos[cavaloEscolhido - 1];
+    img.alt = `Cavalo ${cavaloEscolhido}`;
+    img.className = 'w-32 h-32 object-cover rounded-full mx-auto';
+    fotoVencedorEl.appendChild(img);
+    vencedorContainerEl.classList.remove('hidden');
+    criarConfete();
+}
+ 
+
+    </script>
+</body>
+</html>
